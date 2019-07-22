@@ -8,7 +8,9 @@ const baseURL = base_config.baseURL;
 
 
 module.exports = {
-    publicPath: './',
+    publicPath: process.env.NODE_ENV === 'production' ?
+        './' :
+        '/',
     css: {
         loaderOptions: {
             css: {},
