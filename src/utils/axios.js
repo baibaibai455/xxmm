@@ -32,7 +32,7 @@ export default function(url = '', data = {}, method = 'get', state = true, heade
         responseType: 'json',
         data: dataData,
         params: paramsData,
-        timeout: 120000,
+        timeout: 240000,
         headers: headerObj,
         method: method
     });
