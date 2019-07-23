@@ -2,15 +2,15 @@
     <div>
         <div class="bg" ref="minHeight">
             <div class="input-box">
-                <input type="text" v-model="audioId" placeholder="输入ID">
-                <button @click="listFun" :disabled="disList">展示列表</button>
-                <button @click="downFun" :disabled="disDwon"> {{disDwon&&disList ?'下载中':'开始下载' }}</button>
+                <input :disabled="disDwon&&disList" placeholder="输入ID" type="text" v-model="audioId">
+                <button :disabled="disList" @click="listFun">展示列表</button>
+                <button :disabled="disDwon" @click="downFun"> {{disDwon&&disList ?'下载中':'开始下载' }}</button>
 
             </div>
 
             <div class="list-box">
-                <div v-for="(ii,index) in data"
-                     @click="dd(ii.trackInfo.playPath,ii.trackInfo.title,ii.id)">
+                <div @click="dd(ii.trackInfo.playPath,ii.trackInfo.title,ii.id)"
+                     v-for="(ii,index) in data">
                     <div :style="{ color:ii.is ?'#7eb05b':'#000'}">
                         {{index+1}}-- {{ii.trackInfo.title}}
                     </div>
