@@ -1,21 +1,21 @@
 <template>
     <div>
         <div class="bg" ref="minHeight">
+            <div class="input-box">
+                <input type="text" v-model="audioId" placeholder="输入ID">
+                <button @click="listFun" :disabled="disList">展示列表</button>
+                <button @click="downFun" :disabled="disDwon"> {{disDwon&&disList ?'下载中':'开始下载' }}</button>
 
+            </div>
 
-            <input type="text" v-model="audioId" placeholder="输入ID">
-
-            <button @click="downFun">开始</button>
             <div class="list-box">
-                <div v-for="ii in data" v-show=" !(idarr.join('-').indexOf(ii.id)>0)"
+                <div v-for="(ii,index) in data"
                      @click="dd(ii.trackInfo.playPath,ii.trackInfo.title,ii.id)">
-                    <div :style="{
-                fontSize:'15px',
-                            color:idarr.join('-').indexOf(ii.trackInfo.title)>0?'#7eb05b':'#000'
-                            }">{{ii.trackInfo.title}}
+                    <div :style="{ color:ii.is ?'#7eb05b':'#000'}">
+                        {{index+1}}-- {{ii.trackInfo.title}}
                     </div>
 
-                    <!--            <audio :src="ii.trackInfo.playPath" controls></audio>-->
+                    <audio :src="ii.trackInfo.playPath" controls></audio>
 
                 </div>
             </div>
@@ -33,6 +33,8 @@
 
 
             return {
+                disList: false,
+                disDwon: true,
                 data: [],
                 page: 1,
                 idarr: ['f'],
@@ -48,41 +50,40 @@
         },
         methods: {
             downFun() {
+                this.dd(this.index);
+                this.disDwon = true;
+            },
+            listFun() {
+                this.disList = true;
+                this.disDwon = false;
                 this.init();
             },
             dd(i) {
 
-                let ii = this.data[i];
+                let audio = this.data[i];
 
-                console.log(ii);
+
                 this.index++;
 
 
                 var x = new XMLHttpRequest();
-                x.open('GET', ii.trackInfo.playPath, true);
+                x.open('GET', audio.trackInfo.playPath, true);
                 x.responseType = 'blob';
                 x.onload = (e) => {
-
-                    console.log(e);
 
 
                     var filevalue = e.target.responseURL;
                     filevalue = filevalue.substring(filevalue.lastIndexOf('.'));
 
 
-                    console.log(filevalue);
-
-                    // download(x.response, ii.trackInfo.title + filevalue, e.currentTarget.response.type);
-                    console.log(ii.trackInfo.title);
-
-
-                    this.idarr.push(ii.trackInfo.title);
+                    download(x.response, audio.trackInfo.title + filevalue, e.currentTarget.response.type);
 
 
                     if (this.index >= 10) {
                         this.dd(this.index);
 
                     }
+                    audio.is = true;
 
                 };
                 x.send();
@@ -106,7 +107,7 @@
 
                     for (let i = 0; i < data.length; i++) {
 
-                        data[i].is = true;
+                        data[i].is = false;
                         this.data.push(data[i]);
 
 
@@ -117,8 +118,6 @@
                         this.page++;
                         this.init();
 
-                    } else {
-                        this.dd(this.index);
                     }
 
 
@@ -140,27 +139,32 @@
 </script>
 
 <style lang="scss" scoped>
-    input {
-        width: 300px;
-        height: 40px;
-        font-size: 18px;
-    }
 
-    button {
-        height: 40px;
-        width: 100px;
-        font-size: 20px;
+    .input-box {
+        margin-bottom: 20px;
+
+        input {
+            width: 300px;
+            height: 40px;
+            font-size: 18px;
+        }
+
+        button {
+            height: 40px;
+            width: 100px;
+            font-size: 20px;
+        }
     }
 
     .list-box {
         display: flex;
         flex-flow: row wrap;
         align-items: center;
+        font-size: 14px;
 
         > div {
             width: 33%;
-
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
     }
 
