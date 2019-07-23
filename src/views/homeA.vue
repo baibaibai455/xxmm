@@ -6,17 +6,18 @@
             <input type="text" v-model="audioId" placeholder="输入ID">
 
             <button @click="downFun">开始</button>
-            <div v-for="ii in data" v-show=" !(idarr.join('-').indexOf(ii.id)>0)" class="aa"
-                 @click="dd(ii.trackInfo.playPath,ii.trackInfo.title,ii.id)">
-                <div :style="{
+            <div class="list-box">
+                <div v-for="ii in data" v-show=" !(idarr.join('-').indexOf(ii.id)>0)"
+                     @click="dd(ii.trackInfo.playPath,ii.trackInfo.title,ii.id)">
+                    <div :style="{
                 fontSize:'15px',
                             color:idarr.join('-').indexOf(ii.trackInfo.title)>0?'#7eb05b':'#000'
                             }">{{ii.trackInfo.title}}
+                    </div>
+
+                    <!--            <audio :src="ii.trackInfo.playPath" controls></audio>-->
+
                 </div>
-
-                <!--            <audio :src="ii.trackInfo.playPath" controls></audio>-->
-
-
             </div>
         </div>
     </div>
@@ -36,7 +37,7 @@
                 page: 1,
                 idarr: ['f'],
                 index: 0,
-                audioId: ''
+                audioId: '8258341'
             };
         },
         computed: {},
@@ -51,29 +52,45 @@
             },
             dd(i) {
 
-
-                this.index++;
-
-
                 let ii = this.data[i];
-                this.idarr.push(ii.trackInfo.title);
+
+                console.log(ii);
+                this.index++;
 
 
                 var x = new XMLHttpRequest();
                 x.open('GET', ii.trackInfo.playPath, true);
                 x.responseType = 'blob';
                 x.onload = (e) => {
-                    download(x.response, ii.trackInfo.title + '.mp3', 'audio/mp3');
+
+                    console.log(e);
+
+
+                    var filevalue = e.target.responseURL;
+                    filevalue = filevalue.substring(filevalue.lastIndexOf('.'));
+
+
+                    console.log(filevalue);
+
+                    // download(x.response, ii.trackInfo.title + filevalue, e.currentTarget.response.type);
                     console.log(ii.trackInfo.title);
 
+
+                    this.idarr.push(ii.trackInfo.title);
+
+
+                    if (this.index >= 10) {
+                        this.dd(this.index);
+
+                    }
 
                 };
                 x.send();
 
-
-                setTimeout(() => {
+                if (this.index < 10) {
                     this.dd(this.index);
-                }, 200);
+                }
+
 
             },
             init() {
@@ -135,5 +152,16 @@
         font-size: 20px;
     }
 
+    .list-box {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+
+        > div {
+            width: 33%;
+
+            margin-bottom: 20px;
+        }
+    }
 
 </style>
