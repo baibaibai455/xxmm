@@ -15,7 +15,7 @@
                         {{index+1}}-- {{ii.trackInfo.title}}
                     </div>
 
-                    <audio :src="ii.trackInfo.playPath" controls></audio>
+<!--                    <audio :src="ii.trackInfo.playPath" controls></audio>-->
 
                 </div>
             </div>
