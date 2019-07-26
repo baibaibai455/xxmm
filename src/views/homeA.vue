@@ -1,43 +1,45 @@
 <template>
-    <el-container class="bg" ref="minHeight">
+    <div class="bg" ref="minHeight">
+        <el-container>
 
-        <el-main>
-            <vue-particles color="#dedede"></vue-particles>
+            <el-main>
+                <vue-particles color="#dedede"></vue-particles>
 
-            <el-row :gutter="10">
-                <el-col :span="12" :xs="8">
+                <el-row :gutter="10">
+                    <el-col :span="12" :xs="8">
 
-                    <el-input :disabled="disDwon&&disList" placeholder="输入ID" v-model="audioId"></el-input>
+                        <el-input :disabled="disDwon&&disList" placeholder="输入ID" v-model="audioId"></el-input>
 
-                </el-col>
-                <el-col :span="12" :xs="16">
+                    </el-col>
+                    <el-col :span="12" :xs="16">
 
-                    <el-button :disabled="disList" @click="listFun" plain type="primary">展示列表</el-button>
-                    <el-button :disabled="disDwon" @click="downFun" plain type="success">
-                        开始下载
-                    </el-button>
+                        <el-button :disabled="disList" @click="listFun" plain type="primary">展示列表</el-button>
+                        <el-button :disabled="disDwon" @click="downFun" plain type="success">
+                            开始下载
+                        </el-button>
 
 
-                </el-col>
-            </el-row>
+                    </el-col>
+                </el-row>
 
-            <el-row :gutter="10" v-if="data.length>0">
-                <el-divider content-position="left">音频列表</el-divider>
+                <el-row :gutter="10" v-if="data.length>0">
+                    <el-divider content-position="left">音频列表</el-divider>
 
-                <el-col :lg="8" :md="12" :sm="24" :xl="8" :xs="24"
-                        class="list" v-for="(ii,index) in data" :key="index">
-                    <div :class="ii.is? 'succeed-text':''"
-                         :title="'点击下载'+ii.trackInfo.title" class="text"
-                         @click="downloadFun(index,'singleDown')">
-                        <span> {{index+1}}-</span> {{ii.trackInfo.title}}
-                    </div>
-                </el-col>
+                    <el-col :lg="8" :md="12" :sm="24" :xl="8" :xs="24"
+                            class="list" v-for="(ii,index) in data" :key="index">
+                        <div :class="ii.is? 'succeed-text':''"
+                             :title="'点击下载'+ii.trackInfo.title" class="text"
+                             @click="downloadFun(index,'singleDown')">
+                            <span> {{index+1}}-</span> {{ii.trackInfo.title}}
+                        </div>
+                    </el-col>
 
-            </el-row>
+                </el-row>
 
-        </el-main>
+            </el-main>
 
-    </el-container>
+        </el-container>
+    </div>
 </template>
 
 <script>
@@ -120,7 +122,6 @@
                     // }
 
 
-
                     console.log(this.continueIndex);
                     this.downloadFun(this.continueIndex);
                     this.continueIndex++;
@@ -168,6 +169,8 @@
             }
         },
         mounted() {
+            let winH = document.documentElement.clientHeight;
+            this.$refs.minHeight.style.minHeight = winH + 'px';
 
 
         },
@@ -180,6 +183,9 @@
 </script>
 
 <style lang="scss" scoped>
+    .bg {
+        background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
 
     .list {
         color: #333333;
