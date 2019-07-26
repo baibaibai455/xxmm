@@ -1,7 +1,7 @@
 <template>
     <el-container class="bg" ref="minHeight">
 
-        <el-main >
+        <el-main>
             <vue-particles color="#dedede"></vue-particles>
 
             <el-row :gutter="10">
@@ -25,8 +25,10 @@
                 <el-divider content-position="left">音频列表</el-divider>
 
                 <el-col :lg="8" :md="12" :sm="24" :xl="8" :xs="24"
-                        @click="downloadFun(index,'singleDown')" class="list" v-for="(ii,index) in data" :key="index">
-                    <div :style="{ color:ii.is ?'#7eb05b':'#000'}" :title="'点击下载'+ii.trackInfo.title" class="text">
+                        class="list" v-for="(ii,index) in data" :key="index">
+                    <div :style="{ color:ii.is ?'#7eb05b !important':'#000'}"
+                         :title="'点击下载'+ii.trackInfo.title" class="text"
+                         @click="downloadFun(index,'singleDown')">
                         <span> {{index+1}}-</span> {{ii.trackInfo.title}}
                     </div>
                 </el-col>
@@ -73,7 +75,7 @@
 
                 this.loading = this.$loading({
                     lock: true,
-                    text: '加载音频列表',
+                    text: '加载音频列表'
 
                 });
 
@@ -125,7 +127,7 @@
             initList() {
                 this.$axios('https://m.ximalaya.com/m-revision/common/album/queryAlbumTrackRecordsByPage', {
                     albumId: this.audioId,
-                    pageSize: 20,
+                    pageSize: 10,
                     page: this.page
                 }).then((res) => {
 
@@ -143,7 +145,7 @@
 
                         setTimeout(() => {
                             this.initList();
-                        }, 300);
+                        }, 100);
 
 
                     } else {
@@ -171,15 +173,22 @@
 <style lang="scss" scoped>
 
     .list {
-        cursor: pointer;
+        color: #333333;
         font-size: 14px;
         margin-top: 16px;
 
         .text {
+            cursor: pointer;
             width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            transition: all 0.3s;
+
+            &:hover {
+                transition: all 0.3s;
+                color: #fad0c4 !important;
+            }
 
             span {
                 width: 28px;
