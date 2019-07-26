@@ -8,7 +8,7 @@
                 <el-row :gutter="10">
                     <el-col :span="12" :xs="8">
 
-                        <el-input :disabled="disDwon&&disList" placeholder="输入ID" v-model="audioId"></el-input>
+                        <el-input :disabled="disList" placeholder="输入ID" v-model="audioId"></el-input>
 
                     </el-col>
                     <el-col :span="12" :xs="16">
@@ -25,11 +25,11 @@
                 <el-row :gutter="10" v-if="data.length>0">
                     <el-divider content-position="left">音频列表</el-divider>
 
-                    <el-col :lg="8" :md="12" :sm="24" :xl="8" :xs="24"
-                            class="list" v-for="(ii,index) in data" :key="index">
+                    <el-col :key="index" :lg="8" :md="12" :sm="24" :xl="8"
+                            :xs="24" class="list" v-for="(ii,index) in data">
                         <div :class="ii.is? 'succeed-text':''"
-                             :title="'点击下载'+ii.trackInfo.title" class="text"
-                             @click="downloadFun(index,'singleDown')">
+                             :title="'点击下载'+ii.trackInfo.title" @click="downloadFun(index,'singleDown')"
+                             class="text">
                             <span> {{index+1}}-</span> {{ii.trackInfo.title}}
                         </div>
                     </el-col>
@@ -76,6 +76,20 @@
                 this.disDwon = true;
             },
             listFun() {
+
+
+                let audioId = this.audioId.split('/');
+
+
+                for (let i = 0; i < audioId.length; i++) {
+                    console.log(parseInt(audioId[i]));
+
+
+                    if (parseInt(audioId[i]) > 0) {
+
+                        this.audioId = audioId[i];
+                    }
+                }
 
 
                 this.loading = this.$loading({
