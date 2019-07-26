@@ -1,7 +1,7 @@
 <template>
     <el-container class="bg" ref="minHeight">
 
-        <el-main>
+        <el-main >
             <vue-particles color="#dedede"></vue-particles>
 
             <el-row :gutter="10">
@@ -14,7 +14,7 @@
 
                     <el-button :disabled="disList" @click="listFun" plain type="primary">展示列表</el-button>
                     <el-button :disabled="disDwon" @click="downFun" plain type="success">
-                        {{disDwon&&disList ?'下载中':'开始下载' }}
+                        开始下载
                     </el-button>
 
 
@@ -25,7 +25,7 @@
                 <el-divider content-position="left">音频列表</el-divider>
 
                 <el-col :lg="8" :md="12" :sm="24" :xl="8" :xs="24"
-                        @click="dd(index,'singleDown')" class="list" v-for="(ii,index) in data" :key="index">
+                        @click="downloadFun(index,'singleDown')" class="list" v-for="(ii,index) in data" :key="index">
                     <div :style="{ color:ii.is ?'#7eb05b':'#000'}" :title="'点击下载'+ii.trackInfo.title" class="text">
                         <span> {{index+1}}-</span> {{ii.trackInfo.title}}
                     </div>
@@ -48,6 +48,7 @@
 
 
             return {
+                loading: '',
                 disList: false,
                 disDwon: true,
                 data: [],
@@ -64,15 +65,25 @@
         },
         methods: {
             downFun() {
-                this.dd(this.index);
+                this.downloadFun(this.index);
                 this.disDwon = true;
             },
             listFun() {
+
+
+                this.loading = this.$loading({
+                    lock: true,
+                    text: '加载音频列表',
+
+                });
+
+
                 this.disList = true;
-                this.disDwon = false;
                 this.initList();
+
+
             },
-            dd(i, type) {
+            downloadFun(i, type) {
 
                 console.log('下载第- ' + i + ' -个');
 
@@ -91,7 +102,7 @@
                     download(x.response, audio.trackInfo.title + filevalue, e.currentTarget.response.type);
 
                     if (this.index >= 10 && !type) {
-                        this.dd(this.index);
+                        this.downloadFun(this.index);
                     }
 
                     audio.is = true;
@@ -107,7 +118,7 @@
                 x.send();
 
                 if (this.index < 10 && !type) {
-                    this.dd(this.index);
+                    this.downloadFun(this.index);
                 }
 
             },
@@ -129,8 +140,15 @@
 
                     if (data.length != 0) {
                         this.page++;
-                        this.initList();
 
+                        setTimeout(() => {
+                            this.initList();
+                        }, 300);
+
+
+                    } else {
+                        this.loading.close();
+                        this.disDwon = false;
                     }
 
                 }).catch((res) => {
