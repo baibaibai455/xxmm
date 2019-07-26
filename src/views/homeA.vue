@@ -132,25 +132,27 @@
                 }).then((res) => {
 
                     let data = res.data.data.trackDetailInfos;
-
-                    for (let i = 0; i < data.length; i++) {
-
-                        data[i].is = false;
-                        this.data.push(data[i]);
-
-                    }
-
                     if (data.length != 0) {
+                        for (let i = 0; i < data.length; i++) {
+
+                            data[i].is = false;
+                            this.data.push(data[i]);
+
+                        }
+
                         this.page++;
 
                         setTimeout(() => {
                             this.initList();
-                        }, 100);
+                            window.scroll(0, document.querySelector('body').offsetHeight + 1000);
 
+                        }, 100);
 
                     } else {
                         this.loading.close();
                         this.disDwon = false;
+                        window.scroll(0, 0);
+
                     }
 
                 }).catch((res) => {
