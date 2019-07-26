@@ -1,26 +1,45 @@
 <template>
-    <div>
-        <div class="bg" ref="minHeight">
-            <div class="input-box">
-                <input :disabled="disDwon&&disList" placeholder="输入ID" type="text" v-model="audioId">
-                <button :disabled="disList" @click="listFun">展示列表</button>
-                <button :disabled="disDwon" @click="downFun"> {{disDwon&&disList ?'下载中':'开始下载' }}</button>
 
-            </div>
 
-            <div class="list-box">
-                <div @click="dd(ii.trackInfo.playPath,ii.trackInfo.title,ii.id)"
-                     v-for="(ii,index) in data">
-                    <div :style="{ color:ii.is ?'#7eb05b':'#000'}">
-                        {{index+1}}-- {{ii.trackInfo.title}}
+    <el-container class="bg" ref="minHeight">
+
+        <el-main>
+            <el-row :gutter="10">
+                <el-col :span="12" :xs="8">
+
+
+                    <el-input :disabled="disDwon&&disList" placeholder="输入ID" v-model="audioId"></el-input>
+
+
+                </el-col>
+                <el-col :span="12" :xs="16">
+
+                    <el-button type="primary" plain :disabled="disList" @click="listFun">展示列表</el-button>
+                    <el-button type="success" plain :disabled="disDwon" @click="downFun">{{disDwon&&disList
+                        ?'下载中':'开始下载' }}
+                    </el-button>
+
+
+                </el-col>
+            </el-row>
+
+
+            <el-row :gutter="10">
+                <el-col class="list" @click="dd(index,'singleDown')" v-for="(ii,index) in data" :xs="24" :sm="24"
+                        :md="12" :lg="8" :xl="8">
+                    <div :style="{ color:ii.is ?'#7eb05b':'#000'}"  class="text"  :title="'点击下载'+ii.trackInfo.title">
+                        <span> {{index+1}}-</span> {{ii.trackInfo.title}}
                     </div>
+                </el-col>
 
-<!--                    <audio :src="ii.trackInfo.playPath" controls></audio>-->
+            </el-row>
 
-                </div>
-            </div>
-        </div>
-    </div>
+
+        </el-main>
+
+    </el-container>
+
+
 </template>
 
 <script>
@@ -58,10 +77,11 @@
                 this.disDwon = false;
                 this.init();
             },
-            dd(i) {
+            dd(i, type) {
+
+                console.log('下载第- ' + i + ' -个');
 
                 let audio = this.data[i];
-
 
                 this.index++;
 
@@ -79,16 +99,15 @@
                     download(x.response, audio.trackInfo.title + filevalue, e.currentTarget.response.type);
 
 
-                    if (this.index >= 10) {
+                    if (this.index >= 10 && !type) {
                         this.dd(this.index);
-
                     }
                     audio.is = true;
 
                 };
                 x.send();
 
-                if (this.index < 10) {
+                if (this.index < 10 && !type) {
                     this.dd(this.index);
                 }
 
@@ -140,31 +159,21 @@
 
 <style lang="scss" scoped>
 
-    .input-box {
-        margin-bottom: 20px;
-
-        input {
-            width: 300px;
-            height: 40px;
-            font-size: 18px;
-        }
-
-        button {
-            height: 40px;
-            width: 100px;
-            font-size: 20px;
-        }
-    }
-
-    .list-box {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
+    .list {
+        cursor: pointer;
         font-size: 14px;
+        margin-top: 16px;
 
-        > div {
-            width: 33%;
-            margin-bottom: 10px;
+
+        .text{
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            span {
+                width: 28px;
+                display: inline-block;
+            }
         }
     }
 

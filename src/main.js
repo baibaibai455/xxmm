@@ -17,6 +17,19 @@ import Url from './utils/URLs';
 import Bridge from './utils/bridge';
 
 
+
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
+
+
+
+
+
+
+
+
 Vue.use(VueRouter);
 Vue.prototype.$axios = Axios;
 Vue.prototype.$url = Url;
