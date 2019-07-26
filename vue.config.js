@@ -28,7 +28,7 @@ module.exports = {
     productionSourceMap: false,
 
     devServer: {
-        // open: true,      //自动打开浏览器
+        open: true,      //自动打开浏览器
         host: '',
         port: '',
         public: '',

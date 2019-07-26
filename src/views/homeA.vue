@@ -2,6 +2,8 @@
     <el-container class="bg" ref="minHeight">
 
         <el-main>
+            <vue-particles color="#dedede"></vue-particles>
+
             <el-row :gutter="10">
                 <el-col :span="12" :xs="8">
 
@@ -19,9 +21,11 @@
                 </el-col>
             </el-row>
 
-            <el-row :gutter="10">
+            <el-row :gutter="10" v-if="data.length>0">
+                <el-divider content-position="left">音频列表</el-divider>
+
                 <el-col :lg="8" :md="12" :sm="24" :xl="8" :xs="24"
-                        @click="dd(index,'singleDown')" class="list" v-for="(ii,index) in data">
+                        @click="dd(index,'singleDown')" class="list" v-for="(ii,index) in data" :key="index">
                     <div :style="{ color:ii.is ?'#7eb05b':'#000'}" :title="'点击下载'+ii.trackInfo.title" class="text">
                         <span> {{index+1}}-</span> {{ii.trackInfo.title}}
                     </div>
@@ -66,7 +70,7 @@
             listFun() {
                 this.disList = true;
                 this.disDwon = false;
-                this.init();
+                this.initList();
             },
             dd(i, type) {
 
@@ -92,6 +96,13 @@
 
                     audio.is = true;
 
+
+                    this.$notify({
+                        title: '成功',
+                        message: audio.trackInfo.title,
+                        type: 'success'
+                    });
+
                 };
                 x.send();
 
@@ -100,7 +111,7 @@
                 }
 
             },
-            init() {
+            initList() {
                 this.$axios('https://m.ximalaya.com/m-revision/common/album/queryAlbumTrackRecordsByPage', {
                     albumId: this.audioId,
                     pageSize: 20,
@@ -118,7 +129,7 @@
 
                     if (data.length != 0) {
                         this.page++;
-                        this.init();
+                        this.initList();
 
                     }
 
@@ -157,6 +168,14 @@
                 display: inline-block;
             }
         }
+    }
+
+    /deep/ .particles-js-canvas-el {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 
 </style>
