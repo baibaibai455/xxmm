@@ -103,12 +103,8 @@
 
                     download(x.response, audio.trackInfo.title + filevalue, e.currentTarget.response.type);
 
-                    if (this.index >= 10 && !type) {
-                        this.downloadFun(this.index);
-                    }
 
                     audio.is = true;
-
 
                     this.$notify({
                         title: '成功',
@@ -116,10 +112,14 @@
                         type: 'success'
                     });
 
+                    if (this.index >= 16 && !type) {
+                        this.downloadFun(this.index);
+                    }
+
                 };
                 x.send();
 
-                if (this.index < 10 && !type) {
+                if (this.index < 16 && !type) {
                     this.downloadFun(this.index);
                 }
 
