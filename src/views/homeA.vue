@@ -56,14 +56,17 @@
                 data: [],
                 page: 1,
                 idarr: ['f'],
+                audioId: '8258341',
+                constIndex: 10,
                 index: 0,
-                audioId: '8258341'
+                continueIndex: 0
+
             };
         },
         computed: {},
         props: {},
         created() {
-
+            this.continueIndex = this.constIndex;
         },
         methods: {
             downFun() {
@@ -112,14 +115,19 @@
                         type: 'success'
                     });
 
-                    if (this.index >= 16 && !type) {
-                        this.downloadFun(this.index);
-                    }
+                    // if (this.index >= this.constIndex && !type) {
+                    //     this.downloadFun(this.index);
+                    // }
 
+
+
+                    console.log(this.continueIndex);
+                    this.downloadFun(this.continueIndex);
+                    this.continueIndex++;
                 };
                 x.send();
 
-                if (this.index < 16 && !type) {
+                if (this.index < this.constIndex && !type) {
                     this.downloadFun(this.index);
                 }
 
