@@ -76,23 +76,20 @@
 
                 this.index++;
 
-
                 var x = new XMLHttpRequest();
                 x.open('GET', audio.trackInfo.playPath, true);
                 x.responseType = 'blob';
                 x.onload = (e) => {
 
-
                     var filevalue = e.target.responseURL;
                     filevalue = filevalue.substring(filevalue.lastIndexOf('.'));
 
-
                     download(x.response, audio.trackInfo.title + filevalue, e.currentTarget.response.type);
-
 
                     if (this.index >= 10 && !type) {
                         this.dd(this.index);
                     }
+
                     audio.is = true;
 
                 };
@@ -102,7 +99,6 @@
                     this.dd(this.index);
                 }
 
-
             },
             init() {
                 this.$axios('https://m.ximalaya.com/m-revision/common/album/queryAlbumTrackRecordsByPage', {
@@ -111,8 +107,6 @@
                     page: this.page
                 }).then((res) => {
 
-                    // console.log(res.data.data.trackDetailInfos);
-
                     let data = res.data.data.trackDetailInfos;
 
                     for (let i = 0; i < data.length; i++) {
@@ -120,16 +114,13 @@
                         data[i].is = false;
                         this.data.push(data[i]);
 
-
                     }
-
 
                     if (data.length != 0) {
                         this.page++;
                         this.init();
 
                     }
-
 
                 }).catch((res) => {
                     console.log(res);
