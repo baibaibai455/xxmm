@@ -26,7 +26,7 @@
 
                 <el-col :lg="8" :md="12" :sm="24" :xl="8" :xs="24"
                         class="list" v-for="(ii,index) in data" :key="index">
-                    <div :style="{ color:ii.is ?'#7eb05b !important':'#000'}"
+                    <div :class="ii.is? 'succeed-text':''"
                          :title="'点击下载'+ii.trackInfo.title" class="text"
                          @click="downloadFun(index,'singleDown')">
                         <span> {{index+1}}-</span> {{ii.trackInfo.title}}
@@ -142,11 +142,10 @@
 
                         this.page++;
 
-                        setTimeout(() => {
-                            this.initList();
-                            window.scroll(0, document.querySelector('body').offsetHeight + 1000);
 
-                        }, 100);
+                        this.initList();
+                        window.scroll(0, document.querySelector('body').offsetHeight + 1000);
+
 
                     } else {
                         this.loading.close();
@@ -189,13 +188,17 @@
 
             &:hover {
                 transition: all 0.3s;
-                color: #fad0c4 !important;
+                color: #a6c0fe;
             }
 
             span {
                 width: 28px;
                 display: inline-block;
             }
+        }
+
+        .succeed-text {
+            color: #6ac98e !important;
         }
     }
 
