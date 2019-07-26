@@ -1,45 +1,37 @@
 <template>
-
-
     <el-container class="bg" ref="minHeight">
 
         <el-main>
             <el-row :gutter="10">
                 <el-col :span="12" :xs="8">
 
-
                     <el-input :disabled="disDwon&&disList" placeholder="输入ID" v-model="audioId"></el-input>
-
 
                 </el-col>
                 <el-col :span="12" :xs="16">
 
-                    <el-button type="primary" plain :disabled="disList" @click="listFun">展示列表</el-button>
-                    <el-button type="success" plain :disabled="disDwon" @click="downFun">{{disDwon&&disList
-                        ?'下载中':'开始下载' }}
+                    <el-button :disabled="disList" @click="listFun" plain type="primary">展示列表</el-button>
+                    <el-button :disabled="disDwon" @click="downFun" plain type="success">
+                        {{disDwon&&disList ?'下载中':'开始下载' }}
                     </el-button>
 
 
                 </el-col>
             </el-row>
 
-
             <el-row :gutter="10">
-                <el-col class="list" @click="dd(index,'singleDown')" v-for="(ii,index) in data" :xs="24" :sm="24"
-                        :md="12" :lg="8" :xl="8">
-                    <div :style="{ color:ii.is ?'#7eb05b':'#000'}"  class="text"  :title="'点击下载'+ii.trackInfo.title">
+                <el-col :lg="8" :md="12" :sm="24" :xl="8" :xs="24"
+                        @click="dd(index,'singleDown')" class="list" v-for="(ii,index) in data">
+                    <div :style="{ color:ii.is ?'#7eb05b':'#000'}" :title="'点击下载'+ii.trackInfo.title" class="text">
                         <span> {{index+1}}-</span> {{ii.trackInfo.title}}
                     </div>
                 </el-col>
 
             </el-row>
 
-
         </el-main>
 
     </el-container>
-
-
 </template>
 
 <script>
@@ -65,7 +57,6 @@
         props: {},
         created() {
 
-            // this.init();
         },
         methods: {
             downFun() {
@@ -164,12 +155,12 @@
         font-size: 14px;
         margin-top: 16px;
 
-
-        .text{
+        .text {
             width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+
             span {
                 width: 28px;
                 display: inline-block;
