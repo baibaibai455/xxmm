@@ -4,6 +4,7 @@
 
             <el-main>
                 <!--                <vue-particles color="#dedede"></vue-particles>-->
+                <el-divider content-position="left">将需要下载的 链接 复制到此处</el-divider>
 
                 <el-row :gutter="10">
                     <el-col :span="12" :xs="8">
@@ -58,7 +59,7 @@
                 data: [],
                 page: 1,
                 idarr: ['f'],
-                audioId: '8258341',
+                audioId: 'https://www.ximalaya.com/ertong/8258341/',
                 constIndex: 10,
                 index: 0,
                 continueIndex: 0
@@ -191,7 +192,7 @@
 
 <style lang="scss" scoped>
     .bg {
-        background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background-image: linear-gradient(135deg, #c3cfe2  0%, #f5f7fa 100%);
     }
 
     .list {
