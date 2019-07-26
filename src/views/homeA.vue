@@ -77,20 +77,15 @@
             },
             listFun() {
 
-
                 let audioId = this.audioId.split('/');
 
-
                 for (let i = 0; i < audioId.length; i++) {
-                    console.log(parseInt(audioId[i]));
-
 
                     if (parseInt(audioId[i]) > 0) {
-
                         this.audioId = audioId[i];
                     }
-                }
 
+                }
 
                 this.loading = this.$loading({
                     lock: true,
@@ -98,10 +93,8 @@
 
                 });
 
-
                 this.disList = true;
                 this.initList();
-
 
             },
             downloadFun(i, type) {
