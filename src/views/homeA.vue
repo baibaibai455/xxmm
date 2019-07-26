@@ -3,7 +3,7 @@
         <el-container>
 
             <el-main>
-                <vue-particles color="#dedede"></vue-particles>
+                <!--                <vue-particles color="#dedede"></vue-particles>-->
 
                 <el-row :gutter="10">
                     <el-col :span="12" :xs="8">
