@@ -129,10 +129,13 @@
                     //     this.downloadFun(this.index);
                     // }
 
+                    if (!type) {
 
-                    console.log(this.continueIndex);
-                    this.downloadFun(this.continueIndex);
-                    this.continueIndex++;
+                        this.downloadFun(this.continueIndex);
+                        this.continueIndex++;
+
+                    }
+
                 };
                 x.send();
 
@@ -192,7 +195,7 @@
 
 <style lang="scss" scoped>
     .bg {
-        background-image: linear-gradient(135deg, #c3cfe2  0%, #f5f7fa 100%);
+        background-image: linear-gradient(135deg, #c3cfe2 0%, #f5f7fa 100%);
     }
 
     .list {
