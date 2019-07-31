@@ -1,31 +1,26 @@
 <template>
     <div class="bg" ref="minHeight">
         <el-container>
-
             <el-main>
                 <!--                <vue-particles color="#dedede"></vue-particles>-->
                 <el-divider content-position="left">将需要下载的 链接 复制到此处</el-divider>
 
                 <el-row :gutter="10">
                     <el-col :span="12" :xs="8">
-
                         <el-input :disabled="disList" placeholder="输入ID" v-model="audioId"></el-input>
 
                     </el-col>
                     <el-col :span="12" :xs="16">
-
                         <el-button :disabled="disList" @click="listFun" plain type="primary">展示列表</el-button>
                         <el-button :disabled="disDwon" @click="downFun" plain type="success">
                             开始下载
                         </el-button>
-
 
                     </el-col>
                 </el-row>
 
                 <el-row :gutter="10" v-if="data.length>0">
                     <el-divider content-position="left">音频列表</el-divider>
-
                     <el-col :key="index" :lg="8" :md="12" :sm="24" :xl="8"
                             :xs="24" class="list" v-for="(ii,index) in data">
                         <div :class="ii.is? 'succeed-text':''"
@@ -34,24 +29,17 @@
                             <span> {{index+1}}-</span> {{ii.trackInfo.title}}
                         </div>
                     </el-col>
-
                 </el-row>
-
             </el-main>
-
         </el-container>
     </div>
 </template>
-
 <script>
-
 
     export default {
         name: 'down-ximalaya',
         components: {},
         data() {
-
-
             return {
                 loading: '',
                 disList: false,
@@ -116,7 +104,6 @@
 
                     download(x.response, audio.trackInfo.title + filevalue, e.currentTarget.response.type);
 
-
                     audio.is = true;
 
                     this.$notify({
@@ -130,7 +117,6 @@
                     // }
 
                     if (!type) {
-
                         this.downloadFun(this.continueIndex);
                         this.continueIndex++;
 
@@ -157,15 +143,12 @@
 
                             data[i].is = false;
                             this.data.push(data[i]);
-
                         }
 
                         this.page++;
 
-
                         this.initList();
                         window.scroll(0, document.querySelector('body').offsetHeight + 1000);
-
 
                     } else {
                         this.loading.close();
